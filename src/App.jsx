@@ -6,6 +6,7 @@ import Research from './components/Research';
 import Publications from './components/Publications';
 import Patents from './components/Patents';
 import Gallery from './components/Gallery';
+import Curtain from './components/Curtain';
 import { resumeData } from './data/resumeData';
 
 function App() {
@@ -42,6 +43,8 @@ function App() {
 
   return (
     <>
+      <Curtain />
+      
       {/* Background Orbs */}
       <div className="bg-gradient-orb bg-gradient-1 floating"></div>
       <div className="bg-gradient-orb bg-gradient-2 floating" style={{ animationDelay: '-3s' }}></div>
