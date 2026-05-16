@@ -16,7 +16,7 @@ export const resumeData = {
       i10Index: "146",
     },
     links: {
-      googleScholar: "https://scholar.google.com/citations?user=H8-O9BEAAAAJ",
+      googleScholar: "https://scholar.google.com/citations?user=H8-O9BEAAAAJ&hl=en",
       orcid: "https://orcid.org/0000-0002-2150-7826",
       scopus: "https://www.scopus.com/authid/detail.uri?authorId=16647734200",
     },
