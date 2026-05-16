@@ -55,7 +55,7 @@ const Hero = () => {
             style={{ display: 'flex', justifyContent: 'center' }}
           >
             <div style={{ position: 'relative', width: '100%', maxWidth: '400px', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 40px rgba(0,0,0,0.1)', border: '4px solid white' }}>
-              <img src="/atul_dp.jpeg" alt="Prof. Atul Thakur" style={{ width: '100%', height: 'auto', display: 'block' }} />
+              <img src={`${import.meta.env.BASE_URL}atul_dp.jpeg`} alt="Prof. Atul Thakur" style={{ width: '100%', height: 'auto', display: 'block' }} />
             </div>
           </motion.div>
 

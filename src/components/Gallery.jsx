@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const Gallery = () => {
   // We have 88 photos based on the files processed.
-  const photos = Array.from({ length: 88 }, (_, i) => `/photos/photo_${i + 1}.jpeg`);
+  const photos = Array.from({ length: 88 }, (_, i) => `${import.meta.env.BASE_URL}photos/photo_${i + 1}.jpeg`);
 
   return (
     <section id="gallery" className="section">
