@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Hero from './components/Hero';
 import About from './components/About';
 import Experience from './components/Experience';
@@ -9,6 +9,37 @@ import Gallery from './components/Gallery';
 import { resumeData } from './data/resumeData';
 
 function App() {
+  const [activeSection, setActiveSection] = useState('hero');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['hero', 'about', 'experience', 'research', 'publications', 'gallery'];
+      let current = 'hero';
+
+      sections.forEach((id) => {
+        const section = document.getElementById(id);
+        if (section) {
+          const sectionTop = section.offsetTop;
+          if (window.scrollY >= sectionTop - 150) {
+            current = id;
+          }
+        }
+      });
+      setActiveSection(current);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const navLinks = [
+    { id: 'about', label: 'About' },
+    { id: 'experience', label: 'Experience' },
+    { id: 'research', label: 'Research' },
+    { id: 'publications', label: 'Publications' },
+    { id: 'gallery', label: 'Gallery' }
+  ];
+
   return (
     <>
       {/* Background Orbs */}
@@ -30,24 +61,36 @@ function App() {
             Atul Thakur<span className="text-gradient">.</span>
           </div>
           <div style={{ display: 'flex', gap: '2rem' }}>
-            <a href="#about" style={{ color: 'var(--text-color)' }}>About</a>
-            <a href="#experience" style={{ color: 'var(--text-color)' }}>Experience</a>
-            <a href="#research" style={{ color: 'var(--text-color)' }}>Research</a>
-            <a href="#publications" style={{ color: 'var(--text-color)' }}>Publications</a>
-            <a href="#gallery" style={{ color: 'var(--text-color)' }}>Gallery</a>
+            {navLinks.map(link => (
+              <a 
+                key={link.id} 
+                href={`#${link.id}`} 
+                style={{ 
+                  color: activeSection === link.id ? 'var(--accent-color)' : 'var(--text-color)',
+                  fontWeight: activeSection === link.id ? '600' : '400',
+                  transition: 'color 0.3s ease',
+                  position: 'relative'
+                }}
+              >
+                {link.label}
+                {activeSection === link.id && (
+                  <span style={{ position: 'absolute', bottom: '-5px', left: 0, right: 0, height: '2px', background: 'var(--accent-color)', borderRadius: '2px' }} />
+                )}
+              </a>
+            ))}
           </div>
         </div>
       </nav>
 
       {/* Main Content */}
       <main>
-        <Hero />
-        <About />
-        <Experience />
-        <Research />
-        <Publications />
-        <Patents />
-        <Gallery />
+        <div id="hero"><Hero /></div>
+        <div id="about"><About /></div>
+        <div id="experience"><Experience /></div>
+        <div id="research"><Research /></div>
+        <div id="publications"><Publications /></div>
+        <div id="patents"><Patents /></div>
+        <div id="gallery"><Gallery /></div>
       </main>
 
       {/* Footer */}
