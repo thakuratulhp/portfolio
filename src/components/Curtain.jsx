@@ -61,9 +61,9 @@ const Curtain = () => {
             style={{
               width: '50vw',
               height: '100vh',
-              backgroundColor: '#0f172a',
-              borderRight: '2px solid rgba(255,255,255,0.05)',
-              boxShadow: '10px 0 30px rgba(0,0,0,0.5)',
+              background: 'linear-gradient(135deg, #fdfbfb 0%, #f3f4f6 100%)',
+              borderRight: '1px solid rgba(0,0,0,0.05)',
+              boxShadow: '10px 0 30px rgba(0,0,0,0.05)',
               position: 'relative',
               zIndex: 2
             }}
@@ -77,9 +77,9 @@ const Curtain = () => {
             style={{
               width: '50vw',
               height: '100vh',
-              backgroundColor: '#0f172a',
-              borderLeft: '2px solid rgba(255,255,255,0.05)',
-              boxShadow: '-10px 0 30px rgba(0,0,0,0.5)',
+              background: 'linear-gradient(135deg, #f3f4f6 0%, #fdfbfb 100%)',
+              borderLeft: '1px solid rgba(0,0,0,0.05)',
+              boxShadow: '-10px 0 30px rgba(0,0,0,0.05)',
               position: 'relative',
               zIndex: 2
             }}
@@ -100,7 +100,7 @@ const Curtain = () => {
                   transform: 'translate(-50%, -50%)',
                   textAlign: 'center',
                   zIndex: 3,
-                  color: 'white'
+                  color: '#1e293b'
                 }}
               >
                 <h1 style={{ 
