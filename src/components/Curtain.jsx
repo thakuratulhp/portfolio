@@ -1,61 +1,129 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { resumeData } from '../data/resumeData';
 
 const Curtain = () => {
   const [isVisible, setIsVisible] = useState(true);
+  const [startSplit, setStartSplit] = useState(false);
 
   useEffect(() => {
-    // The curtain stays down for a brief moment, then raises
-    const timer = setTimeout(() => {
-      setIsVisible(false);
-    }, 800); // 800ms delay before raising
+    // 1. Text animates first.
+    // 2. Then the text fades out and the curtain splits.
+    const textTimer = setTimeout(() => {
+      setStartSplit(true);
+    }, 1200);
 
-    return () => clearTimeout(timer);
+    const removeTimer = setTimeout(() => {
+      setIsVisible(false);
+    }, 2200); // Wait for the split animation to finish
+
+    return () => {
+      clearTimeout(textTimer);
+      clearTimeout(removeTimer);
+    };
   }, []);
+
+  // Framer motion variants
+  const leftCurtainVariants = {
+    initial: { x: 0 },
+    split: { 
+      x: '-100vw', 
+      transition: { duration: 1, ease: [0.77, 0, 0.175, 1] } 
+    }
+  };
+
+  const rightCurtainVariants = {
+    initial: { x: 0 },
+    split: { 
+      x: '100vw', 
+      transition: { duration: 1, ease: [0.77, 0, 0.175, 1] } 
+    }
+  };
 
   return (
     <AnimatePresence>
       {isVisible && (
-        <motion.div
-          initial={{ y: 0 }}
-          exit={{ 
-            y: '-100vh', 
-            transition: { 
-              duration: 1.2, 
-              ease: [0.77, 0, 0.175, 1] // Custom sleek easing curve 
-            } 
-          }}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            backgroundColor: '#0f172a', // Dark elegant background
-            zIndex: 9999,
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            color: 'white',
-          }}
-        >
-          {/* Optional: We can show a logo or name in the center while the curtain is down */}
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          zIndex: 9999,
+          pointerEvents: 'none', // Prevents blocking clicks after it fades
+          display: 'flex'
+        }}>
+          
+          {/* Left Half */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1, transition: { duration: 0.4 } }}
-            transition={{ duration: 0.5 }}
-            style={{ textAlign: 'center' }}
-          >
-            <h1 style={{ fontSize: '2.5rem', fontWeight: 800, fontFamily: 'Outfit, sans-serif', letterSpacing: '2px', marginBottom: '0.5rem' }}>
-              Atul Thakur<span style={{ color: 'var(--accent-color)' }}>.</span>
-            </h1>
-            <div style={{ height: '2px', width: '0%', background: 'var(--accent-color)', margin: '0 auto' }} 
-                 className="loading-bar-animation"></div>
-          </motion.div>
-        </motion.div>
+            variants={leftCurtainVariants}
+            initial="initial"
+            animate={startSplit ? "split" : "initial"}
+            style={{
+              width: '50vw',
+              height: '100vh',
+              backgroundColor: '#0f172a',
+              borderRight: '2px solid rgba(255,255,255,0.05)',
+              boxShadow: '10px 0 30px rgba(0,0,0,0.5)',
+              position: 'relative',
+              zIndex: 2
+            }}
+          />
+
+          {/* Right Half */}
+          <motion.div
+            variants={rightCurtainVariants}
+            initial="initial"
+            animate={startSplit ? "split" : "initial"}
+            style={{
+              width: '50vw',
+              height: '100vh',
+              backgroundColor: '#0f172a',
+              borderLeft: '2px solid rgba(255,255,255,0.05)',
+              boxShadow: '-10px 0 30px rgba(0,0,0,0.5)',
+              position: 'relative',
+              zIndex: 2
+            }}
+          />
+
+          {/* Center Logo/Text Overlay */}
+          <AnimatePresence>
+            {!startSplit && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
+                animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+                exit={{ opacity: 0, scale: 1.5, filter: 'blur(10px)', transition: { duration: 0.6, ease: 'easeInOut' } }}
+                transition={{ duration: 0.8, ease: 'easeOut' }}
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  transform: 'translate(-50%, -50%)',
+                  textAlign: 'center',
+                  zIndex: 3,
+                  color: 'white'
+                }}
+              >
+                <h1 style={{ 
+                  fontSize: '3rem', 
+                  fontWeight: 800, 
+                  fontFamily: 'Outfit, sans-serif', 
+                  letterSpacing: '4px',
+                  textShadow: '0 0 20px rgba(14, 165, 233, 0.5)'
+                }}>
+                  Atul Thakur<span style={{ color: 'var(--accent-color)' }}>.</span>
+                </h1>
+                
+                <motion.div 
+                  initial={{ width: '0%' }}
+                  animate={{ width: '100%' }}
+                  transition={{ duration: 1, ease: 'easeInOut' }}
+                  style={{ height: '3px', background: 'var(--accent-color)', margin: '10px auto 0', borderRadius: '2px' }} 
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+        </div>
       )}
     </AnimatePresence>
   );
