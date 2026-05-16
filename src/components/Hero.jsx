@@ -33,10 +33,9 @@ const Hero = () => {
             </h1>
             
             <h2 style={{ fontSize: '1.8rem', fontWeight: 500, color: 'var(--text-color)', marginBottom: '2rem', height: '40px' }}>
-              <span style={{ color: 'var(--text-muted)' }}>I am a </span>
               <span className="text-gradient" style={{ fontWeight: 'bold' }}>
                 <Typewriter
-                  words={resumeData.personalInfo.affiliations.map(a => a.split(',')[0])}
+                  words={['Dean at Lovely Professional University']}
                   loop={0}
                   cursor
                   cursorStyle='|'
