@@ -65,7 +65,7 @@ export const resumeData = {
     {
       role: "Director",
       institution: "Amity School of Applied Sciences, Amity University Haryana",
-      duration: "2022 - Present",
+      duration: "2022 - Dec 2025",
     },
     {
       role: "Adjunct Professor",
